@@ -202,26 +202,25 @@ def main():
     while ticks <= 60:
         for car_obj in sim.road.cars:
 
-            print('Tick:', ticks)
+            # print('Tick:', ticks)
 
             car_obj.set_tailing_distance_attr()
             slow = car_obj.random_slowdown()
             car_obj.calculate_new_speed(slow)
             car_obj.change_car_location()
 
-            print('Location', car_obj.location, 'Tailing', car_obj.tailing_distance, 'Speed', car_obj.speed)
+            # print('Location', car_obj.location, 'Tailing', car_obj.tailing_distance, 'Speed', car_obj.speed)
 
-        list_all_locations.append([car_obj.location for car_obj in sim.road.cars])
+        x = [car_obj.location for car_obj in sim.road.cars]
+        y = [n for n in range(len(x))]
+        plt.scatter(x, y)
+
         list_avg_speeds.append(round(sum([car_obj.speed for car_obj in sim.road.cars])/30.0, 2))
         ticks += 1
 
-    print("\n\n\n\n", list_all_locations)
-    print("\n\n\n\n", list_avg_speeds)
+    # print("\n\n\n\n", list_all_locations)
+    # print("\n\n\n\n", list_avg_speeds)
 
-
-    x = list_all_locations
-    y = [n for n in range(60)]
-    plt.scatter(x,y)
     plt.show()
 
 if __name__ == "__main__":
