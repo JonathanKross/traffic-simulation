@@ -91,7 +91,6 @@ class Road:
 
     def __init__(self):
         self.cars = [Car() for _ in range(30)]
-        self.graph = np.array([0 for _ in range(1100)])
 
     def inital_car_location(self):
         """1000/30 = 33 Evenly space cars. ~28 meters between cars initally."""
@@ -130,8 +129,8 @@ def main():
         y = [n for n in range(len(x))]
         plt.scatter(x, y)
 
-        list_avg_speeds.append(round(sum(
-                        [car_obj.speed for car_obj in sim.road.cars])/30.0, 2))
+        list_avg_speeds.append(round(st.mean(
+                        [car_obj.speed for car_obj in sim.road.cars]), 2))
         ticks += 1
 
     plt.show()
