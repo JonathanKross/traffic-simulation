@@ -23,18 +23,22 @@ class Car:
         self.next_car = 0
 
     def __str__(self):
-        return "Location= {}, Speed= {}, Dist= {}".format(self.location, self.speed, self.tailing_distance)
+        return "Location= {}, Speed= {}, Dist= {}".format(
+            self.location, self.speed, self.tailing_distance)
 
     def __repr__(self):
             return self.__str__()
 
     def accelerate(self):
+        """Increase a car's speed by 2 m/s."""
         self.speed += 2
 
     def decelerate(self):
+        """Decrease a car's speed by 2 m/s."""
         self.speed -= 2
 
     def random_slowdown(self):
+        """10 percent random slow requirement of 2m/s."""
         random_number = random.randint(1, 10)
         if random_number == 1 and self.speed <= 1:
                 self.speed = 0
@@ -46,6 +50,7 @@ class Car:
             return False
 
     def calculate_new_speed(self, slow):
+        """Based on distance between cars, calculates car's new speed."""
         if slow is False:
 
             if self.tailing_distance <= 2:
@@ -58,15 +63,17 @@ class Car:
                 self.speed = self.next_car.speed
 
     def change_car_location(self):
+        """Move a car's position based on speed. Check for going past 1km."""
         self.location += self.speed
         if self.location > 1000:
             self.location = self.location % 1000
         return self.location
 
     def set_tailing_distance_attr(self):
-
+        """Find distance in meters between each car and set as self attr."""
         if self.next_car.location - self.location < 0:
-            self.tailing_distance = self.next_car.location - ((self.location + 5) - 1000)
+            self.tailing_distance = self.next_car.location - (
+                                                    (self.location + 5) - 1000)
         else:
             self.tailing_distance = self.next_car.location - (self.location + 5)
 
@@ -75,10 +82,7 @@ class Car:
         if space <= 2:
             self.speed = 0
         elif space >= self.speed and self.speed < self.max_speed:
-            # if self.speed < self.max_speed:
             self.speed += self.acceleration
-            # elif self.speed > self.max_speed:
-            #     self.speed = self.max_speed
         else:
             self.speed = next_car.speed
 
@@ -97,7 +101,7 @@ class Road:
             initiation += 33
 
     def set_next_car_attr(self):
-
+        """Set the self attr of next_car as the Car object in front of self."""
         for i, car_obj in enumerate(self.cars):
             if i == 29:
                 car_obj.next_car = self.cars[0]
@@ -126,7 +130,8 @@ def main():
         y = [n for n in range(len(x))]
         plt.scatter(x, y)
 
-        list_avg_speeds.append(round(sum([car_obj.speed for car_obj in sim.road.cars])/30.0, 2))
+        list_avg_speeds.append(round(sum(
+                        [car_obj.speed for car_obj in sim.road.cars])/30.0, 2))
         ticks += 1
 
     plt.show()
